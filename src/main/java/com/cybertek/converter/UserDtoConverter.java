@@ -23,7 +23,7 @@ public class  UserDtoConverter implements Converter<String, UserDTO> {
         //We needed String     --th:value--
         //That's why we created this converter
 
-        return userService.findById(source);
+        return userService.findByUserName(source);
     }
 
 }
