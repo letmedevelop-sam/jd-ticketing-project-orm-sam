@@ -72,4 +72,14 @@ public class UserServiceImpl implements UserService {
     public void delete(String username) {
 
     }
+
+    //HARD DELETE is deleting from DB as well BUT it is not recommanded
+    @Override
+    public void deleteByUserName(String username) {
+        userRepository.deleteByUserName(username);
+    }
+
+
+
+
 }
