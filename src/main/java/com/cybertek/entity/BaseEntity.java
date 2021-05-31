@@ -22,9 +22,15 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    //we can add server validation coming from HIBERNATE  @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)  //after any update insert datetime will not be null and it will remain same
     private LocalDateTime insertDateTime;
+    @Column(nullable = false, updatable = false)
     private Long insertUserId;
+    @Column(nullable = false)
     private LocalDateTime lastUpdateDateTime;
+    @Column(nullable = false)
     private Long lastUpdateUserId;
 
     private Boolean isDeleted=false;
