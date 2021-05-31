@@ -68,12 +68,18 @@ public class UserServiceImpl implements UserService {
         return findByUserName(dto.getUserName());
     }
 
+    //We will not physically delete from DB but change isDeleted=true
+    //From User ENTITY we used where clause to filter all queries to check isDeleted=false
     @Override
     public void delete(String username) {
+        User user = userRepository.findByUserName(username);
+        user.setIsDeleted(true);
+        userRepository.save(user);
+
 
     }
 
-    //HARD DELETE is deleting from DB as well BUT it is not recommanded
+    //HARD DELETE is deleting from DB as well BUT it is not recommended
     @Override
     public void deleteByUserName(String username) {
         userRepository.deleteByUserName(username);
