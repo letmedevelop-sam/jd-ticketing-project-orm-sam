@@ -8,15 +8,19 @@ public class RoleMapper {
 
     private ModelMapper modelMapper;
 
+    //generate constructor
     public RoleMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
+    //create a method to convert DTO to ENTITY
     public Role convertToEntity(RoleDTO dto){
         return modelMapper.map(dto, Role.class);
     }
 
+    //create a method to convert ENTITY to DTO
     public RoleDTO convertToDto(Role entity){
         return modelMapper.map(entity, RoleDTO.class);
     }
+
 }
