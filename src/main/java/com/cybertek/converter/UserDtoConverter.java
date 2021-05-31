@@ -1,7 +1,6 @@
 package com.cybertek.converter;
 
 
-import com.cybertek.dto.RoleDTO;
 import com.cybertek.dto.UserDTO;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
