@@ -30,7 +30,7 @@ public class BaseEntity {
     private Long insertUserId;
     @Column(nullable = false)
     private LocalDateTime lastUpdateDateTime;
-    @Column(nullable = false)
+  //  @Column(nullable = false)
     private Long lastUpdateUserId;
 
     private Boolean isDeleted=false;
