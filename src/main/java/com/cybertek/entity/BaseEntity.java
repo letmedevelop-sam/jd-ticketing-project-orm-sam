@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -20,7 +17,7 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
 //Some data we want to keep in DB but no need to see on UI
-// Persist
+// Persist    : Say something in DataBase
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +29,19 @@ public class BaseEntity {
 
     private Boolean isDeleted=false;
 
+    @PrePersist     //This method will run before PERSIST each time (before object is saved in DB)
+    private void onPrePersist(){
 
+        this.insertDateTime=LocalDateTime.now();
+        this.lastUpdateDateTime=LocalDateTime.now();
+        this.insertUserId=1L;       //For now they are hard-coded. When we start Security they will be dynamic
+        this.lastUpdateUserId=1L;   //For now they are hard-coded. When we start Security they will be dynamic
+
+    }
+
+    @PreUpdate
+    private void onPreUpdate(){
+        this.lastUpdateDateTime=LocalDateTime.now();
+        this.insertUserId=1L;       //For now they are hard-coded. When we start Security they will be dynamic
+    }
 }
