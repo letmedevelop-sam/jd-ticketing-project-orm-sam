@@ -28,6 +28,8 @@ public class Project extends BaseEntity{    //All fields need to MATCH projectDT
 
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @Enumerated(EnumType.STRING)
     private Status projectStatus;
     private String projectDetail;
 
