@@ -37,17 +37,18 @@ public class UserController {
         //instead of going to create.htlm how about if we call the createuser method?
     }
 
-//    @GetMapping("/update/{username}")  //use get mapping because we will add some data // we will use username path variable
-//    public String editUser(@PathVariable("username") String username, Model model){
-//
-//        model.addAttribute("user",userService.findById(username));
-//        model.addAttribute("users",userService.findAll());
-//        model.addAttribute("roles",roleService.findAll());
-//
-//        return "/user/update";
-//
-//    }
-//
+    //project ORM part2 recording
+    @GetMapping("/update/{username}")  //use get mapping because we will add some data // we will use username path variable
+    public String editUser(@PathVariable("username") String username, Model model){
+
+        model.addAttribute("user",userService.findByUserName(username)); //repository will bring it // 1. write service 2. implementation 3. controller
+        model.addAttribute("users",userService.listAllUsers());
+        model.addAttribute("roles",roleService.listAllRoles()); //this will bring the roles to the dropdown in UI
+
+        return "/user/update";
+
+    }
+
 //    @PostMapping("/update/{username}")
 //    public String updateUser(@PathVariable("username") String username,UserDTO user,Model model){
 //        userService.update(user);

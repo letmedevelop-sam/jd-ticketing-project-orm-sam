@@ -4,15 +4,17 @@ import com.cybertek.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-@Component // create bean
+@Component // create bean to be managed by the container
 public class UserMapper {
 
     private ModelMapper modelMapper;
 
-    //generate constructor
+    //generate constructor for INJECTION
     public UserMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
+
+    //ENTITY fieldNames MUST match DTO fieldNames //If they dont match NULL will be assigned to not matching ones
 
     //create a method to convert DTO to ENTITY
     public User convertToEntity(UserDTO dto){

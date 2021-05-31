@@ -32,8 +32,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByUserName(String username) {
-        return null;
+    public UserDTO findByUserName(String username) {        //this findByUserName is for Controller use
+
+        //bring the data // return type will be ENTITY
+        User user = userRepository.findByUserName(username);  //this findByUserName will be called from UserRepository
+
+        //Convert the data which came as ENTITY to DTO
+        return userMapper.convertToDto(user);
     }
 
     @Override
@@ -44,9 +49,23 @@ public class UserServiceImpl implements UserService {
         userRepository.save(obj);
     }
 
+    //UPDATE
     @Override
-    public UserDTO update(UserDTO dto) {
-        return null;
+    public UserDTO update(UserDTO dto) { //This dto will be the updated one
+
+        //Find the current user  // THIS user is NOT UPDATED yet
+        User user = userRepository.findByUserName(dto.getUserName()); //We dont know the ID. We will bring it from DTO
+
+        //Map update user DTO to ENTITY object
+        User convertedUser = userMapper.convertToEntity(dto); // This is updated again there is no ID because dto has no ID
+
+        //set ID to the converted object
+        convertedUser.setId(user.getId());
+
+        //save the updated user
+        userRepository.save(convertedUser);
+
+        return findByUserName(dto.getUserName());
     }
 
     @Override
