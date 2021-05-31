@@ -28,7 +28,7 @@ public class BaseEntity {
     private LocalDateTime insertDateTime;
     @Column(nullable = false, updatable = false)
     private Long insertUserId;
-    @Column(nullable = false)
+  //  @Column(nullable = false)
     private LocalDateTime lastUpdateDateTime;
   //  @Column(nullable = false)
     private Long lastUpdateUserId;
