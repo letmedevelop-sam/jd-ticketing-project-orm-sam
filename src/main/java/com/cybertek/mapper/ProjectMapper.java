@@ -4,7 +4,9 @@ import com.cybertek.dto.ProjectDTO;
 import com.cybertek.entity.Project;
 import com.cybertek.repository.ProjectRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component // create bean to be managed by the container
 public class ProjectMapper {
     //Will retrieve data from DataBase
     //Controller will talk to Service
