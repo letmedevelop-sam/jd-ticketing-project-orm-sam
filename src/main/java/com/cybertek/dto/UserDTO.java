@@ -13,6 +13,8 @@ import lombok.Setter;
 
 public class UserDTO {
 
+    private Long id;   // to assign manually an id as manager_id
+
     private String  firstName;
     private String  lastName;
     private String  userName;

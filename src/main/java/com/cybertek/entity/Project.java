@@ -17,7 +17,9 @@ import java.time.LocalDate;
 @Where(clause = "is_deleted=false")  //where is coming from HIBERNATE
 public class Project extends BaseEntity{    //All fields need to MATCH projectDTO
 
+    @Column(unique = true)      //This will not let the user to add same code to different project
     private String projectCode;
+
     private String projectName;
 
     @ManyToOne(fetch = FetchType.LAZY)
