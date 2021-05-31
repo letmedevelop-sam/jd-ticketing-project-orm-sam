@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserName(dto.getUserName()); //We dont know the ID. We will bring it from DTO
 
         //Map update user DTO to ENTITY object
-        User convertedUser = userMapper.convertToEntity(dto); // This is updated again there is no ID because dto has no ID
+        User convertedUser = userMapper.convertToEntity(dto); // This is updated one but again there is no ID because dto has no ID
 
         //set ID to the converted object
         convertedUser.setId(user.getId());
