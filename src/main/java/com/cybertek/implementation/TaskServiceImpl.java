@@ -120,9 +120,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTasksByStatusIsNot(Status status) {
-
-        User user = userRepository.findByUserName("gezotudu");
+                                                //email of the employee
+        User user = userRepository.findByUserName("gezotudu");                  //this part will be gone by SECURITY
         List<Task> list = taskRepository.findAllByTaskStatusIsNotAndAssignedEmployee(status, user);
         return list.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> listAllTasksByProjectManager() {
+        User user = userRepository.findByUserName("java@cybertekschool.com");
+        List<Task> tasks = taskRepository.findAllByProjectAssignedManager(user);
+        return tasks.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
     }
 }

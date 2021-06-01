@@ -24,4 +24,6 @@ public interface TaskService {
 
     List<TaskDTO> listAllTasksByStatusIsNot(Status status);
 
+    List<TaskDTO> listAllTasksByProjectManager();
+
 }
