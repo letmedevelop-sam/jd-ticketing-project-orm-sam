@@ -1,5 +1,6 @@
 package com.cybertek.implementation;
 
+import com.cybertek.dto.ProjectDTO;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.entity.Task;
 import com.cybertek.enums.Status;
@@ -42,6 +43,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
+    //list all existing TASKs
     @Override
     public List<TaskDTO> listAllTasks() {
         List<Task> list = taskRepository.findAll();
@@ -94,5 +96,24 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public int totalCompletedTasks(String projectCode) {
         return taskRepository.totalCompletedTasks(projectCode);
+    }
+
+    //Find all the tasks on the certain project
+    // and DELETE each of them
+    @Override
+    public void deleteByProject(ProjectDTO project) {
+        List<TaskDTO> taskDTOS = listAllByProject(project);
+        taskDTOS.forEach(taskDTO ->delete(taskDTO.getId()));
+    }
+
+
+    //write a custom method to list all tasks under a project
+    public List<TaskDTO> listAllByProject(ProjectDTO project) {
+        List<Task> list = taskRepository.findAllByProject(projectMapper.convertToEntity(project));
+        return list.stream().map(obj -> taskMapper.convertToDto(obj)).collect(Collectors.toList());
+
+        //return list.stream().map(obj -> {     //hoover over RETURN and accept LAMBDA replacement
+        //            return taskMapper.convertToDto(obj);
+        //        }).collect(Collectors.toList());
     }
 }

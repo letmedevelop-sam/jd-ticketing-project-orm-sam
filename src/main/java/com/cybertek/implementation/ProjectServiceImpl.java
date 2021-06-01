@@ -83,7 +83,15 @@ public class ProjectServiceImpl implements ProjectService {
     public void delete(String code) {
         Project project=projectRepository.findByProjectCode(code);
         project.setIsDeleted(true);
+
+        //set a different project code after delete
+        project.setProjectCode(project.getProjectCode()+ "-" + project.getId());
+
         projectRepository.save(project);
+
+        //after delete project work on task
+        taskService.deleteByProject(projectMapper.convertToDto(project));
+
 
     }
 
