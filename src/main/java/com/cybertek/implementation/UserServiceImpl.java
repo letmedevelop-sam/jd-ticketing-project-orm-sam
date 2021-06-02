@@ -4,11 +4,13 @@ import com.cybertek.dto.ProjectDTO;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.User;
+import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.mapper.UserMapper;
 import com.cybertek.repository.UserRepository;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class UserServiceImpl implements UserService {
     ProjectService projectService;
     TaskService taskService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, ProjectService projectService, TaskService taskService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, TaskService taskService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.projectService = projectService;
@@ -79,11 +81,23 @@ public class UserServiceImpl implements UserService {
     //We will not physically delete from DB but change isDeleted=true
     //From User ENTITY we used where clause to filter all queries to check isDeleted=false
     @Override
-    public void delete(String username) {
+    public void delete(String username) throws TicketingProjectException {
         User user = userRepository.findByUserName(username);
+
+        //add exception
+        if(user == null){
+            throw new TicketingProjectException("User Does Not Exist");
+        }
+
+        if(!checkIfUserCanBeDeleted(user)){
+            throw new TicketingProjectException("User can not be deleted. It is linked to a Project or Task");
+        }
+
+        //to let the same user name to be used next time:
+        user.setUserName(user.getUserName() + "-" +  user.getId());
+
         user.setIsDeleted(true);
         userRepository.save(user);
-
 
     }
 
@@ -92,6 +106,7 @@ public class UserServiceImpl implements UserService {
     public void deleteByUserName(String username) {
         userRepository.deleteByUserName(username);
     }
+
 
     @Override
     public List<UserDTO> listAllByRole(String role) {
