@@ -91,26 +91,25 @@ public class TaskController {
     @GetMapping("/employee/edit/{id}")
     public String employee_update(@PathVariable("id") Long id,Model model){
 
-        TaskDTO task = taskService.findByID(id);
-        List<TaskDTO> tasks = taskService.listAllTasksByStatusIsNot(Status.COMPLETE);
-
+        TaskDTO task = taskService.findByID(id);                        //populate the selected task to our form
+        List<TaskDTO> tasks = taskService.listAllTasksByStatusIsNot(Status.COMPLETE); //show all tasks which are not COMPLETED
 
         model.addAttribute("task",task);
         model.addAttribute("users",userService.listAllByRole("employee"));
         model.addAttribute("projects",projectService.listAllProjects());
-        model.addAttribute("tasks",tasks);
-        model.addAttribute("statuses",Status.values());
+        model.addAttribute("tasks",tasks);                                  //show in table
+        model.addAttribute("statuses",Status.values());                 //show values to select one
 
         return "task/employee-update";
 
     }
-/*
+
     @PostMapping("/employee/update/{id}")
     public String employee_update(@PathVariable("id") Long id,TaskDTO taskDTO){
         taskService.updateStatus(taskDTO);
         return "redirect:/task/employee";
     }
-*/
+
     /*
     @GetMapping("/employee/archive")
     public String employee_archieve(Model model){

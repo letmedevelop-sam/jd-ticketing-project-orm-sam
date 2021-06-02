@@ -128,8 +128,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTasksByProjectManager() {
-        User user = userRepository.findByUserName("java@cybertekschool.com");
+        User user = userRepository.findByUserName("samikaratas2000@gmail.com");
         List<Task> tasks = taskRepository.findAllByProjectAssignedManager(user);
         return tasks.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateStatus(TaskDTO dto) {
+        Optional<Task> task = taskRepository.findById(dto.getId());  //go to DB and bring the task
+
+        if(task.isPresent()){
+            task.get().setTaskStatus(dto.getTaskStatus());  //change ths status whatever we receive from the UI
+            taskRepository.save(task.get());                //save the final STATUS
+        }
     }
 }
